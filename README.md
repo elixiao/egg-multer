@@ -37,26 +37,59 @@ $ npm i egg-multer --save
 exports.multer = {
   enable: true,
   package: 'egg-multer',
-};
+}
 ```
 
 ## Configuration
 
 ```js
 // {app_root}/config/config.default.js
+
+// Accept a single file with the name `uri`
 exports.multer = {
-};
+  single: 'uri', 
+}
+
+// Accept an array of files, all with the name `files`
+exports.multer = {
+  array: 'files', 
+}
+
+// Accept a mix of files, specified by fields
+exports.multer = {
+  fields: [{name: 'file', maxCount: 1}],
+}
+
+// Accept only text fields
+exports.multer = {
+  none: true,
+}
+
+// Accepts all files that comes over the wire
+exports.multer = {
+  any: true,
+}
 ```
 
 see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+```js
+async multer() {
+  const { ctx, app } = this
+  console.log('is multipart', ctx.is('multipart'))
+  console.log('is json', ctx.is('json'))
+  console.log('request.body', ctx.request.body)
+  console.log('ctx.file', ctx.file)
+  console.log('ctx.files', ctx.files)
+  ctx.body = { ok: 1 }
+}
+```
 
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](https://github.com/keliq/egg-multer/issues).
 
 ## License
 
